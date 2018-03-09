@@ -1,2 +1,2 @@
 # LeetCode
-Python Work
+Python Work for coding interviews
