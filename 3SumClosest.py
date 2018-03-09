@@ -5,13 +5,16 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        tmp = 0
-        closest_sum = 10000000000
-        for x in range(0, len(nums)-2):
-        	tmp = nums[x] + nums[x+1] + nums[x+2]
-        	if abs(tmp - target) < abs(closest_sum - target):
-        		closest_sum = tmp
-        	print closest_sum, tmp
-        return closest_sum
+        nums.sort()
+        tmp_diff, diff, j, k, lastI = 0, float('inf'), 0, len(nums) - 1, len(nums) - 2
+        for i in range(0, lastI - 1):
+            j, k = i + 1, lastI + 1
+            while j < k:
+            	tmp_diff = nums[i] + nums[j] + nums[k] - target
+            	if tmp_diff == 0: return target
+            	if abs(tmp_diff) < diff: diff = abs(tmp_diff)
+                if tmp_diff < 0: j+=1
+                else: k-=1
+        return diff
 
 print Solution().threeSumClosest([1, 1, -1, -1, 3], 3)
