@@ -5,16 +5,25 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        nums.sort()
-        tmp_diff, diff, j, k, lastI = 0, float('inf'), 0, len(nums) - 1, len(nums) - 2
-        for i in range(0, lastI - 1):
-            j, k = i + 1, lastI + 1
-            while j < k:
-            	tmp_diff = nums[i] + nums[j] + nums[k] - target
-            	if tmp_diff == 0: return target
-            	if abs(tmp_diff) < diff: diff = abs(tmp_diff)
-                if tmp_diff < 0: j+=1
-                else: k-=1
-        return diff
+        nums = sorted(nums)
+        min_diff, result, i = float('inf'), float('inf'), 0
+        while i < len(nums) - 2:
+            if i == 0 or nums[i] != nums[i - 1]:
+                j, k = i + 1, len(nums) - 1
+                while j < k:
+                    diff = nums[i] + nums[j] + nums[k] - target
+                    # print(i, j, k, '-', min_diff, diff)
+                    if abs(diff) < min_diff:
+                        min_diff = abs(diff)
+                        result = nums[i] + nums[j] + nums[k]
+                    if diff == 0:
+                        return target
+                    elif diff < 0:
+                        j += 1
+                    else:
+                        k -= 1
+            i += 1
+        return result
 
-print Solution().threeSumClosest([1, 1, -1, -1, 3], 3)
+
+print(Solution().threeSumClosest([-1, 2, 1, -4], 1))
